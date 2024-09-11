@@ -1,6 +1,8 @@
 
 console.log("jeg er i setbackground.js");
 
+
+// ----------------------- Functions ------------------------------------- //
 function setBackgroundColor() {
     let col = inp.value;
     console.log(col);
@@ -17,24 +19,34 @@ function useColorPicker() {
     pbCol.style.color = col;
 }
 
-function increaseFont(element) {
-    let fontSize = element.style.fontSize;
-    console.log(fontSize);
-    element.style.fontSize = 10 + 'px';
-    fontSize = element.style.fontSize;
-    console.log(fontSize);
+function increaseFontSize(element) {
+    pTagArr.forEach(p => {
+    let fontSize = window.getComputedStyle(p).fontSize;
+    let newSize = parseFloat(fontSize) + 1;
+    p.style.fontSize = newSize + "px";
+    });
 }
 
-pTagArr.forEach(increaseFont);
+function decreaseFontSize() {
+    pTagArr.forEach(p => {
+        let fontSize = window.getComputedStyle(p).fontSize;
+        let newSize = parseFloat(fontSize) - 1;
+        p.style.fontSize = newSize + "px";
+    });
+}
 
-let inpColorValue =document.querySelector(".inpColorValue");
-let inpColorPicker = document.getElementById("inpColorPicker");
+
+// ------------------------- Variables ----------------------------------- //
 
 let inp = document.querySelector(".inpColor");
 console.log(inp);
 
 let pbCol = document.querySelector(".pbSetColor");
 console.log(pbCol);
+
+let inpColorValue =document.querySelector(".inpColorValue");
+let inpColorPicker = document.getElementById("inpColorPicker");
+
 
 pbCol.textContent = "Tryk for at vælge farve";
 
@@ -44,9 +56,17 @@ console.log(bdy);
 const pTags = document.getElementsByTagName('p')
 console.log(pTags);
 
-let pTagArr = Array.from(pTags);
-pTagArr.forEach(p => p.textContent = "Hej fra foreach");
+const pTagArr = Array.from(pTags);
+//pTagArr.forEach(p => p.textContent = "Hej fra foreach");
+pTagArr.forEach(increaseFontSize)
 
+// ------------------------- Eventlisteners ------------------------------- //
 pbCol.addEventListener('click', setBackgroundColor);
 document.addEventListener('keyup', setBackgroundColor);
 inpColorPicker.addEventListener('input', useColorPicker);
+
+let increaseFont = document.querySelector(".increaseFontSize");
+let decreaseFont = document.querySelector(".decreaseFontSize");
+
+increaseFont.addEventListener('click', increaseFontSize);
+decreaseFont.addEventListener('click', decreaseFontSize);
